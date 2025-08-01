@@ -16,7 +16,7 @@
 else
 {
     <div class="card shadow border-0 m-4">
-        <div class="card-header bg-black bg-gradient ml-0 py-3">
+        <div class="card-header bg-black bg-gradient m-lg-0 py-3">
             <div class="row">
                 <div class="col-12 text-center">
                     <h2 class="text-white py-2">@(Id > 0 ? "Update" : "Create") Product</h2>
@@ -36,8 +36,7 @@ else
                     </div>
 
                     <div class="form-floating py-3 col-12">
-                        <label class="form-label" for="Description">Description</label>
-                        <InputText @bind-Value="Product.Description" class="form-control" id="Description" />
+                        <RadzenHtmlEditor @bind-Value=Product.Description style="height: 300px;" />
                         <ValidationMessage For="() => Product.Description" />
                     </div>
 
@@ -167,7 +166,7 @@ else
         IsProcessing = true;
 
         var file = e.File;
-        FileInfo fileInfo = new(file.Name);
+        System.IO.FileInfo fileInfo = new(file.Name);
         var newFileName = $"{Guid.NewGuid()}{fileInfo.Extension}";
 
         if (!Directory.Exists(_directoryPath))
@@ -195,7 +194,7 @@ else
         {
             Product.ImageUrl = null;
             return;
-        }        
+        }
 
         File.Delete(filePathToDeleteImage);
         Product.ImageUrl = null;

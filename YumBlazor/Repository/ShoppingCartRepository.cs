@@ -4,14 +4,9 @@ using YumBlazor.Repository.IRepository;
 
 namespace YumBlazor.Repository
 {
-    public class ShoppingCartRepository : IShoppingCartRepository
+    public class ShoppingCartRepository(ApplicationDbContext db) : IShoppingCartRepository
     {
-        private readonly ApplicationDbContext _db;
-
-        public ShoppingCartRepository(ApplicationDbContext db)
-        {
-            _db = db;
-        }
+        private readonly ApplicationDbContext _db = db;
 
         public async Task<bool> ClearCartAsync(string? userId)
         {
@@ -26,6 +21,17 @@ namespace YumBlazor.Repository
                 .Where(u => u.UserId == userId)
                 .Include(u => u.Product)
                 .ToListAsync();
+        }
+
+        public async Task<int> GetTotalCartCountAsync(string? userId)
+        {
+            int cartCount = 0;
+            var cartItems = await _db.ShoppingCarts.Where(_ => _.UserId == userId).ToListAsync();
+
+            foreach (var item in cartItems)
+                cartCount += item.Count;
+
+            return cartCount;
         }
 
         public async Task<bool> UpdateCartAsync(string userId, int productId, int updateBy)

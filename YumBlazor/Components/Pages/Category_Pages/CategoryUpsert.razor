@@ -13,7 +13,7 @@
 }
 else
 {
-    <div class="card shadow border-0 mt-4">
+    <div class="card shadow border-0 m-4">
         <div class="card-header bg-black bg-gradient m-lg-0 py-3">
             <div class="row">
                 <div class="col-12 text-center">
@@ -28,7 +28,8 @@ else
 
                 <div class="border p-3 mt-4">
                     <div class="form-floating py-3 col-12">
-                        <InputText @bind-Value="Category.Name" class="form-control" />
+                        <label class="form-label" for="Name">Name</label>
+                        <InputText @bind-Value="Category.Name" class="form-control" id="Name" />
                         <ValidationMessage For="() => Category.Name" />
                     </div>
 
